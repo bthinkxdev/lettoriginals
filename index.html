@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lett Originals - Revive Your Helmet's Inner Soul</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #1f1a4f;
+            --deep-blue: #2a2560;
+            --royal-blue: #3d3589;
+            --accent-blue: #5048a8;
+            --light-blue: #6b5fc7;
+            --white: #ffffff;
+            --off-white: #f8f9fa;
+            --light-gray: #e8eaf0;
+            --text-dark: #1f1a4f;
+            --text-light: #6b6b8f;
+            --glow-blue: rgba(63, 53, 137, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8edf5 0%, #f8f9fa 50%, #dce4f0 100%);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .hero {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(248, 249, 250, 0.85) 100%);
+            border-bottom: 3px solid var(--royal-blue);
+            box-shadow: 0 10px 40px rgba(31, 26, 79, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid var(--royal-blue);
+            box-shadow: 0 15px 50px rgba(31, 26, 79, 0.2);
+        }
+
+        .brand-mark img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            background: transparent;
+            border-radius: 50%;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        .logo {
+            font-size: 3.2em;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--royal-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 2.5em;
+            margin: 24px 0 12px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--navy);
+            text-shadow: 0 2px 20px rgba(31, 26, 79, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            margin: 30px 0;
+            opacity: 0.8;
+            font-weight: 300;
+            color: var(--text-light);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 50px;
+            margin: 30px 10px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--royal-blue) 100%);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 15px 40px rgba(31, 26, 79, 0.25);
+            border: 2px solid transparent;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(31, 26, 79, 0.35);
+            background: linear-gradient(135deg, var(--royal-blue) 0%, var(--accent-blue) 100%);
+        }
+
+        .cta-button.secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--navy);
+            border: 3px solid var(--royal-blue);
+        }
+
+        .features {
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.85) 0%, rgba(255, 255, 255, 0.85) 100%);
+            backdrop-filter: blur(10px);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid var(--royal-blue);
+            transition: all 0.4s;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(31, 26, 79, 0.12);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(248, 249, 250, 0.95);
+            box-shadow: 0 25px 70px rgba(31, 26, 79, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--royal-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-title {
+            font-size: 1.5em;
+            margin: 15px 0;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .feature-desc {
+            opacity: 0.8;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+
+        .product-showcase {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(248, 249, 250, 0.85) 100%);
+            backdrop-filter: blur(10px);
+            flex-direction: column;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            max-width: 900px;
+            margin: 60px auto 0;
+            width: 100%;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            overflow: hidden;
+            border: 3px solid var(--royal-blue);
+            transition: all 0.5s;
+            box-shadow: 0 20px 60px rgba(31, 26, 79, 0.15);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(31, 26, 79, 0.25);
+            border-color: var(--accent-blue);
+        }
+
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .luxury-bg {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(61, 53, 137, 0.12), rgba(255, 255, 255, 0.9)),
+                        linear-gradient(135deg, #e8edf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .helmet-glow {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(61, 53, 137, 0.25), transparent 70%);
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .product-image-real {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 450px;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 40px rgba(31, 26, 79, 0.25));
+            background: rgba(255,255,255,0.6);
+            border-radius: 24px;
+            padding: 14px;
+        }
+
+        .feature-list {
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .feature-point {
+            padding: 10px 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+            border-bottom: 1px solid rgba(31, 26, 79, 0.1);
+            color: var(--text-dark);
+        }
+
+        .product-info {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .product-title {
+            font-size: 2em;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .battle-section {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--deep-blue) 50%, var(--royal-blue) 100%);
+        }
+
+        .battle-content {
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        .battle-title {
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--white), var(--off-white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            text-shadow: 0 5px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .section-title {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--navy);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--royal-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .availability {
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.85) 0%, rgba(255, 255, 255, 0.85) 100%);
+            backdrop-filter: blur(10px);
+        }
+
+        .platforms {
+            display: flex;
+            gap: 30px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .platform-badge {
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            font-size: 1.3em;
+            border: 3px solid var(--royal-blue);
+            transition: all 0.3s;
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .platform-badge:hover {
+            background: var(--royal-blue);
+            color: var(--white);
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(31, 26, 79, 0.25);
+        }
+
+        .promo-banner {
+            background: linear-gradient(135deg, var(--navy), var(--royal-blue));
+            padding: 30px;
+            border-radius: 20px;
+            margin: 40px 0;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+            color: var(--white);
+            box-shadow: 0 20px 60px rgba(31, 26, 79, 0.25);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .stats {
+            display: flex;
+            gap: 50px;
+            margin-top: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--royal-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.8;
+            margin-top: 10px;
+            color: var(--text-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .logo { font-size: 2.8em; }
+            .tagline { font-size: 2em; }
+            .section-title { font-size: 2.5em; }
+            .battle-title { font-size: 2.8em; }
+            .product-image-container { height: 400px; }
+        }
+
+        @media (max-width: 768px) {
+            section { padding: 60px 15px; }
+            .logo { font-size: 2.2em; }
+            .tagline { font-size: 1.6em; }
+            .subtitle { font-size: 1.1em; }
+            .section-title { font-size: 2em; }
+            .battle-title { font-size: 2em; }
+            
+            .brand-mark {
+                gap: 10px;
+                padding: 12px 16px;
+            }
+            
+            .brand-mark img {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .stats {
+                gap: 30px;
+            }
+            
+            .stat-number { font-size: 2.5em; }
+            .stat-label { font-size: 1em; }
+            
+            .cta-button {
+                padding: 15px 35px;
+                font-size: 1em;
+                margin: 20px 5px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .feature-card {
+                padding: 30px;
+            }
+            
+            .product-image-container { height: 350px; }
+            
+            .product-info {
+                padding: 25px;
+            }
+            
+            .product-title { font-size: 1.6em; }
+            
+            .platform-badge {
+                padding: 15px 30px;
+                font-size: 1.1em;
+            }
+            
+            .promo-banner {
+                font-size: 1.2em;
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section { padding: 40px 10px; }
+            .logo { font-size: 1.8em; }
+            .tagline { font-size: 1.3em; }
+            .subtitle { font-size: 1em; }
+            .section-title { font-size: 1.6em; }
+            .battle-title { font-size: 1.6em; }
+            
+            .brand-mark {
+                flex-direction: column;
+                gap: 8px;
+                padding: 12px;
+            }
+            
+            .stats {
+                gap: 20px;
+            }
+            
+            .stat-number { font-size: 2em; }
+            .stat-label { font-size: 0.9em; }
+            
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 0.95em;
+                margin: 15px 5px;
+                display: block;
+                width: calc(100% - 10px);
+            }
+            
+            .feature-card {
+                padding: 25px;
+            }
+            
+            .feature-icon { font-size: 2.5em; }
+            .feature-title { font-size: 1.3em; }
+            
+            .product-image-container { height: 300px; }
+            
+            .helmet-glow {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .product-info {
+                padding: 20px;
+            }
+            
+            .product-title { font-size: 1.4em; }
+            .feature-point { font-size: 1em; }
+            
+            .platforms {
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+            }
+            
+            .platform-badge {
+                width: 100%;
+                padding: 15px 20px;
+                font-size: 1em;
+            }
+            
+            .promo-banner {
+                font-size: 1em;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div class="content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="brand-mark floating">
+                    <img src="logo.jpg" alt="Lett Originals logo">
+                    <div class="logo">Lett Originals</div>
+                </div>
+                <h1 class="tagline">Revive Your Helmet's Inner Soul</h1>
+                <p class="subtitle">Premium Anti-Odor Foaming Action | Luxury Care for Your Helmet Interior</p>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">99%</div>
+                        <div class="stat-label">Anti-Bacterial</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">582</div>
+                        <div class="stat-label">Happy Riders</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Odor-Free</div>
+                    </div>
+                </div>
+
+                <div>
+                    <a href="#product" class="cta-button">Shop Now</a>
+                    <a href="#features" class="cta-button secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <div>
+                <h2 class="section-title">Why Choose <span class="gradient-text">Lett</span>?</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🌊</div>
+                        <h3 class="feature-title">Fresh Anti-Odor</h3>
+                        <p class="feature-desc">Premium foaming action eliminates odor at its source, leaving your helmet fresh after every ride</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">✨</div>
+                        <h3 class="feature-title">Fabric Revitalization</h3>
+                        <p class="feature-desc">Advanced formula breathes new life into helmet fabrics, restoring softness and comfort</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3 class="feature-title">Anti-Bacterial Shield</h3>
+                        <p class="feature-desc">99% protection against bacteria, ensuring hygiene and safety with every spray</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">💎</div>
+                        <h3 class="feature-title">Safe Formula</h3>
+                        <p class="feature-desc">Safe for skin and hair, gentle yet powerful cleaning for daily use</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">Quick Action</h3>
+                        <p class="feature-desc">Instant foaming technology works in seconds, perfect for busy riders</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🌿</div>
+                        <h3 class="feature-title">Advanced Chemistry</h3>
+                        <p class="feature-desc">Scientifically formulated for maximum effectiveness without harsh chemicals</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Battle Section -->
+        <section class="battle-section">
+            <div class="battle-content">
+                <h2 class="battle-title">THIS BATTLE<br>DIRT CAN'T WIN!</h2>
+                <p style="font-size: 1.3em; opacity: 0.95; line-height: 1.8; color: var(--white);">
+                    Experience the power of Lett as it battles dirt, grime, and odor. 
+                    Watch as premium foaming action transforms your helmet from dirty to pristine. 
+                    This isn't just cleaning – it's warfare against bacteria.
+                </p>
+                <div class="promo-banner">
+                    GAME OVER FOR DIRT! 🏆
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Showcase -->
+        <section class="product-showcase" id="product">
+            <div style="width: 100%;">
+                <h2 class="section-title">Luxury Care <span class="gradient-text">Collection</span></h2>
+                
+                <div class="showcase-grid">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <div class="luxury-bg">
+                                <div class="helmet-glow"></div>
+                                <img src="product.png" alt="Lett Helmet Cleaner - Luxury Care" class="product-image-real" id="mainProductImage">
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Premium Helmet Cleaner</h3>
+                            <p class="feature-desc">The ultimate solution for helmet hygiene. Fresh anti-odor foaming action with 99% antibacterial protection.</p>
+                            <div class="feature-list">
+                                <div class="feature-point">✓ Odour Elimination</div>
+                                <div class="feature-point">✓ Fabric Revitalization</div>
+                                <div class="feature-point">✓ Anti-Bacterial Shield (99%)</div>
+                            </div>
+                            <div class="promo-banner" style="margin-top: 20px; font-size: 1.2em;">
+                                BUY NOW!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Availability Section -->
+        <section class="availability">
+            <div style="text-align: center; max-width: 1000px; width: 100%;">
+                <h2 class="section-title">Available <span class="gradient-text">Everywhere</span></h2>
+                <p class="subtitle">Get Lett Originals from your favorite online stores</p>
+                
+                <div class="platforms">
+                    <div class="platform-badge">🛒 Flipkart</div>
+                    <div class="platform-badge">📦 Amazon</div>
+                    <div class="platform-badge">🏪 Meesho</div>
+                </div>
+
+                <div style="margin-top: 60px;">
+                    <a href="https://amzn.in/d/h5xmHc" class="cta-button" style="font-size: 1.3em; padding: 25px 60px;">
+                        Shop Now on Amazon
+                    </a>
+                </div>
+
+                <p style="margin-top: 40px; font-size: 1.1em; opacity: 0.7;">
+                    Follow us @lettoriginals | 28 posts • 582 followers
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Three.js Animated Background - More Visible
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // Create particles - More visible
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 4000;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 120;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.18,
+            color: 0x3d3589,
+            transparent: true,
+            opacity: 0.7,
+            blending: THREE.AdditiveBlending
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        // Add geometric shapes - More visible
+        const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
+        const material = new THREE.MeshBasicMaterial({ 
+            color: 0x5048a8, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.3
+        });
+        const torus = new THREE.Mesh(geometry, material);
+        scene.add(torus);
+
+        // Add second torus for more effect
+        const geometry2 = new THREE.TorusGeometry(15, 2, 16, 100);
+        const material2 = new THREE.MeshBasicMaterial({ 
+            color: 0x1f1a4f, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.25
+        });
+        const torus2 = new THREE.Mesh(geometry2, material2);
+        scene.add(torus2);
+
+        camera.position.z = 30;
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotate particles
+            particlesMesh.rotation.y += 0.0015;
+            particlesMesh.rotation.x += 0.001;
+
+            // Rotate first torus
+            torus.rotation.x += 0.004;
+            torus.rotation.y += 0.006;
+            torus.rotation.z += 0.002;
+
+            // Rotate second torus opposite direction
+            torus2.rotation.x -= 0.003;
+            torus2.rotation.y -= 0.004;
+            torus2.rotation.z += 0.001;
+
+            // Mouse interaction
+            camera.position.x += (mouseX * 5 - camera.position.x) * 0.05;
+            camera.position.y += (mouseY * 5 - camera.position.y) * 0.05;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Load actual product image
+        const productImage = document.getElementById('mainProductImage');
+        productImage.src = 'product.png';
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .product-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'all 0.8s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
