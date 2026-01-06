@@ -32,16 +32,6 @@
             overflow-x: hidden;
         }
 
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 1;
-        }
-
         .content {
             position: relative;
             z-index: 1;
@@ -63,6 +53,7 @@
             box-shadow: 0 10px 40px rgba(31, 26, 79, 0.15);
             backdrop-filter: blur(10px);
             position: relative;
+            overflow: hidden;
         }
         
         .hero::before {
@@ -74,6 +65,19 @@
             height: 300px;
             background: radial-gradient(circle at top center, rgba(61, 53, 137, 0.08), transparent 70%);
             pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: -60px;
+            background: url('product.png') center/cover no-repeat;
+            filter: blur(8px) brightness(0.98);
+            opacity: 0.95;
+            transform: scale(1.02);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .hero-content {
@@ -119,8 +123,8 @@
             margin: 24px 0 12px;
             font-weight: 300;
             letter-spacing: 2px;
-            color: var(--navy);
-            text-shadow: 0 2px 20px rgba(31, 26, 79, 0.1);
+            color: #ffffff;
+            text-shadow: 0 2px 20px rgba(31, 26, 79, 0.25);
             line-height: 1.2;
         }
 
@@ -129,7 +133,7 @@
             margin: 30px auto;
             opacity: 0.8;
             font-weight: 300;
-            color: var(--text-light);
+            color: #ffffff;
             max-width: 600px;
             line-height: 1.6;
         }
@@ -779,8 +783,6 @@
     </style>
 </head>
 <body>
-    <div id="canvas-container"></div>
-    
     <div class="content">
         <!-- Hero Section -->
         <section class="hero">
@@ -955,9 +957,28 @@
                 </div>
 
                 <div style="margin-top: 60px;">
-                    <a href="https://www.instagram.com/lettoriginals?igsh=OHh6azhjcHpkdnVt" class="cta-button" style="font-size: 1.3em; padding: 25px 60px; display: flex; align-items: center; justify-content: center; gap: 12px;">
-                        <svg width="28" height="28" viewBox="0 0 448 512" style="vertical-align:middle;">
-                            <path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9S160.5 370.8 224.1 370.8 339 319.6 339 255.9 287.7 141 224.1 141zm0 186.6c-39.6 0-71.7-32.1-71.7-71.7 0-39.6 32.1-71.7 71.7-71.7 39.6 0 71.7 32.1 71.7 71.7 0 39.6-32.1 71.7-71.7 71.7zm146.4-194.3c0 14.9-12.1 27-27 27s-27-12.1-27-27 12.1-27 27-27 27 12.1 27 27zm76.1 27.2c-1.7-35.3-9.9-66.7-36.2-92.9S417.3 1.7 382 0C346.6-1.7 277.4-1.7 242 0 206.7 1.7 175.3 9.9 149.1 36.2 122.8 62.5 114.6 94 112.9 129.3c-1.7 35.3-1.7 104.6 0 140 1.7 35.3 9.9 66.7 36.2 92.9s57.6 34.4 92.9 36.1c35.3 1.7 104.5 1.7 140 0 35.3-1.7 66.7-9.9 92.9-36.1 27.2-26.3 34.4-57.7 36.1-92.9 1.6-35.3 1.6-104.7-.1-140zm-48.4 200.6c-7.8 19.6-23 34.9-42.7 42.7-29.6 11.8-99.8 9.1-132.2 9.1s-102.7 2.6-132.2-9.1c-19.6-7.8-34.9-23-42.7-42.7-11.8-29.6-9.1-99.8-9.1-132.2s-2.6-102.7 9.1-132.2c7.8-19.6 23-34.9 42.7-42.7C144.6 9.1 214.8 11.8 247.2 11.8s102.7-2.6 132.2 9.1c19.6 7.8 34.9 23 42.7 42.7 11.8 29.6 9.1 99.8 9.1 132.2s2.7 102.7-9 132.2z"/>
+                    <a href="https://www.instagram.com/lettoriginals?igsh=OHh6azhjcHpkdnVt" 
+                        class="cta-button" 
+                        style="
+                            font-size: 1.3em; 
+                            padding: 25px 60px; 
+                            display: flex; 
+                            align-items: center; 
+                            justify-content: center; 
+                            gap: 12px;
+                            background: linear-gradient(90deg, #f58529 0%, #dd2a7b 35%, #8134af 65%, #515bd4 100%);
+                            color: #fff;
+                            border: none;
+                            box-shadow: 0 3px 24px 0 rgba(221,42,123,0.18);
+                            transition: box-shadow 0.16s;
+                        "
+                        onmouseover="this.style.boxShadow='0 4px 32px 0 rgba(221,42,123,0.27)';" 
+                        onmouseout="this.style.boxShadow='0 3px 24px 0 rgba(221,42,123,0.18)';"
+                    >
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;">
+                            <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"></rect>
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <circle cx="17" cy="7" r="1.1"></circle>
                         </svg>
                         View Instagram
                     </a>
@@ -970,96 +991,8 @@
         </section>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Three.js Animated Background
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 4000;
-        const posArray = new Float32Array(particlesCount * 3);
-
-        for(let i = 0; i < particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 120;
-        }
-
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.18,
-            color: 0x3d3589,
-            transparent: true,
-            opacity: 0.7,
-            blending: THREE.AdditiveBlending
-        });
-
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
-
-        const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-        const material = new THREE.MeshBasicMaterial({ 
-            color: 0x5048a8, 
-            wireframe: true,
-            transparent: true,
-            opacity: 0.3
-        });
-        const torus = new THREE.Mesh(geometry, material);
-        scene.add(torus);
-
-        const geometry2 = new THREE.TorusGeometry(15, 2, 16, 100);
-        const material2 = new THREE.MeshBasicMaterial({ 
-            color: 0x1f1a4f, 
-            wireframe: true,
-            transparent: true,
-            opacity: 0.25
-        });
-        const torus2 = new THREE.Mesh(geometry2, material2);
-        scene.add(torus2);
-
-        camera.position.z = 30;
-
-        let mouseX = 0;
-        let mouseY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-        });
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            particlesMesh.rotation.y += 0.0015;
-            particlesMesh.rotation.x += 0.001;
-
-            torus.rotation.x += 0.004;
-            torus.rotation.y += 0.006;
-            torus.rotation.z += 0.002;
-
-            torus2.rotation.x -= 0.003;
-            torus2.rotation.y -= 0.004;
-            torus2.rotation.z += 0.001;
-
-            camera.position.x += (mouseX * 5 - camera.position.x) * 0.05;
-            camera.position.y += (mouseY * 5 - camera.position.y) * 0.05;
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // Smooth scroll
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1070,7 +1003,7 @@
             });
         });
 
-        // Scroll animations
+        // Scroll-in animations for cards
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
